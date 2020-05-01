@@ -165,3 +165,36 @@ after installing them, we need to add these packages as a rule in our `webpack.c
 ```
 
 > The order in which loaders are added is important since css-loader handles the compilation of the CSS file and style-loader adds the compiled CSS files to the React DOM. Webpack reads these settings from right to left and the CSS needs to be compiled before it's attached to the DOM.
+
+## Adding ESLint
+
+in order to make sure our code meets certain standards, adding ESLint is required.
+
+```
+npm install --save-dev eslint eslint-loader eslint-plugin-react
+```
+
+`eslint` is the core package and helps us to identify problamatic patterns in our javascript code.<br>
+`eslint-loader` is a package that is used by webpack to run ESLint everytime we update our code.<br>
+`eslint-plugin-react` adds specific rules to ESLint for React Applications.<br>
+to configure ESLint, create a file in root directory called `.eslintrc.js` and add the following code :
+
+```
+module.exports = {
+    env: {
+      browser: true,
+      es6: true,
+    },
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+      ecmaVersion: 2018,
+      sourceType: "module",
+    },
+    plugins: ["react"],
+    extends: ["eslint:recommended", "plugin:react/recommended"]
+};
+```
+
+> The env field sets the actual environment our code will run in and will use es6 functions in it, while the parserOptions field adds extra configuration for using jsx and modern JavaScript. Where things get interesting, however, is the plugins field, which is where we specify that our code uses react as a framework. The extends field is where the recommended settings for eslint are used, as well as framework-specific settings for React.
