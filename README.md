@@ -145,3 +145,23 @@ remove the old script and replace it with the following :<br>
 
 this will create a local server for us.<br>
 _To enable hot reloading, replace the --open flag with the --hot flag. This will only reload files that have been changed instead of the entire project._
+
+## Adding Styles to the Project with Webpack
+
+normally,webpack is unable to compile CSS files,so we need to add appropriate `CSS loaders`.<br>
+follow this command to install the needed packages
+
+```
+npm install --save-dec css-loader style-loader
+```
+
+after installing them, we need to add these packages as a rule in our `webpack.config.js` file .
+
+```
+{
+  test: /\.css$/,
+  use: ["style-loader", "css-loader"],
+}
+```
+
+> The order in which loaders are added is important since css-loader handles the compilation of the CSS file and style-loader adds the compiled CSS files to the React DOM. Webpack reads these settings from right to left and the CSS needs to be compiled before it's attached to the DOM.
