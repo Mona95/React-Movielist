@@ -126,3 +126,22 @@ module.exports = {
 we set the entry point as the `index.html` file, so that webpack knows where to add the bundle in body tag.<br>
 now if we run `npm start`, it creates a new file in /dist directory as `index.html` and if you take a look at it, you will see the script tag, which holds the bundle js code.<br>
 for opening html file in browser,simple run `open dist/index.html`.
+
+## Creating a Development Server
+
+So far, any changes we make in our application, in order to see it we need to run `npm start` each time. this won't be a good practice so we need to install a development server for our application.<br>
+there is another package which we are going to install called `webpack-dev-server`. this package adds the option to force webpack to restart every time we make changes in application, and manages our application files in a memory instead of creating `.dist` directory.
+
+```
+npm install --save-dev webpack-dev-server
+```
+
+after installing package, we need to update our start script in `package.json` .
+remove the old script and replace it with the following :<br>
+
+```
+"start" : "webpack-dev-server --mode development --open"
+```
+
+this will create a local server for us.<br>
+_To enable hot reloading, replace the --open flag with the --hot flag. This will only reload files that have been changed instead of the entire project._
