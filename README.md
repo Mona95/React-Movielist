@@ -88,3 +88,41 @@ we can also add settings for `babel-loader` by creating a file with extension ca
 
 this file configures `babel-loader` to use those two presets.
 the `@babel/preset-env` preset has options defined in it that make sure that the compiler uses the latest version of Node.js.
+
+## Rendering a React Component with Webpack
+
+After creating a simple component in `index.js` file and creating an `index.html` inside /src , we need webpack to bundle our minified version of code to the body tag as `scripts` when running,so we should install `html-webpack-plugin`.
+
+```
+npm install --save-dev html-webpack-plugin
+```
+
+and adding this new package inside webpack configuration file as follow :
+
+```
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+
+const htmlPlugin = new HtmlWebPackPlugin({
+    template: './src/index.html',
+    filename: './index.html',
+});
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
+        ],
+    },
+    plugins: [htmlPlugin],
+};
+```
+
+we set the entry point as the `index.html` file, so that webpack knows where to add the bundle in body tag.<br>
+now if we run `npm start`, it creates a new file in /dist directory as `index.html` and if you take a look at it, you will see the script tag, which holds the bundle js code.<br>
+for opening html file in browser,simple run `open dist/index.html`.
