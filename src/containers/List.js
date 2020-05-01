@@ -16,11 +16,27 @@ export default class List extends Component {
     axios
       .get(`http://www.omdbapi.com/?s=batman&apikey=${OMDB_API_KEY}`)
       .then((res) => {
-        console.log(res.data.Search);
+        res.status === 200 &&
+          this.setState({
+            data: res.data.Search,
+            loading: false,
+          });
       });
   }
 
   render() {
-    return <Card />;
+    const { data, loading } = this.state;
+    if (loading) {
+      return <span>Loading Movie Lists ...</span>;
+    }
+    return (
+      <div className="row">
+        {data.map((data) => (
+          <div className="col-sm-3">
+            <Card key={data.imdbID} movie={data} />
+          </div>
+        ))}
+      </div>
+    );
   }
 }
